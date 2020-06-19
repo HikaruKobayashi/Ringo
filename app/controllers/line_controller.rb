@@ -11,7 +11,7 @@ class LineController < ApplicationController
   end
 
   def callback
-    @post=Post.offset( rand(Post.count) ).first
+    @post = Post.offset( rand(Post.count) ).first
     body = request.body.read
 
     signature = request.env['HTTP_X_LINE_SIGNATURE']
@@ -22,19 +22,20 @@ class LineController < ApplicationController
     events = client.parse_events_from(body)
 
     events.each { |event|
-      if event.message['text'].include?('罪と?')
+
+      if event.message['text'].include?('罪と')
         response = '罰'
-      elsif event.message['text'].include?('能動的?')
+      elsif event.message['text'].include?('能動的')
         response = '三分間'
-      elsif event.message['text'].include?('電波?')
+      elsif event.message['text'].include?('電波')
         response = '通信'
-      elsif event.message['text'].include?('酒と?')
+      elsif event.message['text'].include?('酒と')
         response = '下戸'
-      elsif event.message['text'].include?('OS?')
+      elsif event.message['text'].include?('OS')
         response = 'CA'
-      elsif event.message['text'].include?('ミラー?')
+      elsif event.message['text'].include?('ミラー')
         response = 'ボール'
-      elsif event.message['text'].include?('好きな食べ物は?')
+      elsif event.message['text'].include?('好きな食べ物は？')
         response = 'にんじん'
       elsif event.message['text'].include?('可愛いね。')
         response = '大人になって大好きな人ができて、今まで男の子とチョメチョメしてきたのがリハーサルだったのかと思うぐらい、「私はこの人のために、経験や知識やこれから学ぶこと全部を捧げなければいけない。捧げるべきなんだ」って心に決める。すごく本能的に感じるんですよね。'
