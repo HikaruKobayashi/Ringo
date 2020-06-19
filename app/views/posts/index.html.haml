@@ -15,10 +15,10 @@
             %td= post.reply
             %td
               %button.btn.btn-primary
-                = link_to 'Show', post
+                = link_to 'Show', post, class: 'button-style'
             %td
               %button.btn.btn-warning
-                = link_to 'Edit', edit_post_path(post)
+                = link_to 'Edit', edit_post_path(post), class: 'button-style'
             %td
               %button.btn.btn-danger
-                = link_to 'Delete', post, method: :delete, data: { confirm: 'Are you sure?' }
+                = link_to 'Delete', post, method: :delete, data: { confirm: 'Are you sure?' }, class: 'button-style'
