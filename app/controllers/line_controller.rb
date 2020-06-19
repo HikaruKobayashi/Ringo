@@ -30,6 +30,14 @@ class LineController < ApplicationController
             text: event.message['text']
           }
         end
+        when Line::Bot::Event::MessageType::Follow
+          userId = event['source']['userId'] 
+          User.find_or_create_by(uid: userId)
+        when Line::Bot::Event::MessageType::Unfollow
+          userId = event['source']['userId']  
+          user = User.find_by(uid: userId)
+          user.destroy if user.present?
+        end
       end
     }
 
