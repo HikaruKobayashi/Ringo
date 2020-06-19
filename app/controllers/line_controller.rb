@@ -22,13 +22,37 @@ class LineController < ApplicationController
     events = client.parse_events_from(body)
 
     events.each { |event|
+      if event.message['text'].include?('罪と?')
+        response = '罰'
+      elsif event.message['text'].include?('能動的?')
+        response = '三分間'
+      elsif event.message['text'].include?('電波?')
+        response = '通信'
+      elsif event.message['text'].include?('酒と?')
+        response = '下戸'
+      elsif event.message['text'].include?('OS?')
+        response = 'CA'
+      elsif event.message['text'].include?('ミラー?')
+        response = 'ボール'
+      elsif event.message['text'].include?('好きな食べ物は?')
+        response = 'にんじん'
+      elsif event.message['text'].include?('可愛いね。')
+        response = '大人になって大好きな人ができて、今まで男の子とチョメチョメしてきたのがリハーサルだったのかと思うぐらい、「私はこの人のために、経験や知識やこれから学ぶこと全部を捧げなければいけない。捧げるべきなんだ」って心に決める。すごく本能的に感じるんですよね。'
+      elsif event.message['text'].include?('おはよう。')
+        response = '今日も一日良い日になるといいね。'
+      elsif event.message['text'].include?('おやすみ。')
+        response = '今日もお疲れ様。ゆっくり休んでね。'
+      else
+        response = @post.reply
+      end
+
       case event
       when Line::Bot::Event::Message
         case event.type
         when Line::Bot::Event::MessageType::Text
           message = {
             type: 'text',
-            text: @post.reply
+            text: response
           }
           client.reply_message(event['replyToken'], message)
         when Line::Bot::Event::MessageType::Follow
