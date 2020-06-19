@@ -5,9 +5,9 @@ class LineController < ApplicationController
 
   def client
     @client ||= Line::Bot::Client.new { |config|
-      config.channel_secret = ENV["LINE_CHANNEL_SECRET"]
-      config.channel_token = ENV["LINE_CHANNEL_TOKEN"]
-    }
+    config.channel_secret = ENV["LINE_CHANNEL_SECRET"]
+    config.channel_token = ENV["LINE_CHANNEL_TOKEN"]
+  }
   end
 
   def callback
@@ -29,12 +29,12 @@ class LineController < ApplicationController
             type: 'text',
             text: event.message['text']
           }
-        end
+          client.reply_message(event['replyToken'], message)
         when Line::Bot::Event::MessageType::Follow
-          userId = event['source']['userId'] 
+          userId = event['source']['userId']
           User.find_or_create_by(uid: userId)
         when Line::Bot::Event::MessageType::Unfollow
-          userId = event['source']['userId']  
+          userId = event['source']['userId']
           user = User.find_by(uid: userId)
           user.destroy if user.present?
         end
