@@ -11,6 +11,7 @@ class LineController < ApplicationController
   end
 
   def callback
+    @post=Post.offset( rand(Post.count) ).first
     body = request.body.read
 
     signature = request.env['HTTP_X_LINE_SIGNATURE']
@@ -27,7 +28,7 @@ class LineController < ApplicationController
         when Line::Bot::Event::MessageType::Text
           message = {
             type: 'text',
-            text: event.message['text']
+            text: @post.reply
           }
           client.reply_message(event['replyToken'], message)
         when Line::Bot::Event::MessageType::Follow
