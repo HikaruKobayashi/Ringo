@@ -22,22 +22,43 @@ class LineController < ApplicationController
     events = client.parse_events_from(body)
 
     events.each { |event|
-      case event
-      when Line::Bot::Event::Message
-        case event.type
-        when Line::Bot::Event::MessageType::Text
-          message = {
-            type: 'text',
-            text: @post.reply
-          }
-          client.reply_message(event['replyToken'], message)
-        when Line::Bot::Event::MessageType::Follow
-          userId = event['source']['userId']
-          User.find_or_create_by(uid: userId)
-        when Line::Bot::Event::MessageType::Unfollow
-          userId = event['source']['userId']
-          user = User.find_by(uid: userId)
-          user.destroy if user.present?
+      if message == "愛してる"
+        case event
+        when Line::Bot::Event::Message
+          case event.type
+          when Line::Bot::Event::MessageType::Text
+            message = {
+              type: 'text',
+              text: '「人生っていうのは勝手に与えられるんだから、自分が追求してもいいんだ。幸せ追求権ってあるだろう！」と思ったんですね。'
+            }
+            client.reply_message(event['replyToken'], message)
+          when Line::Bot::Event::MessageType::Follow
+            userId = event['source']['userId']
+            User.find_or_create_by(uid: userId)
+          when Line::Bot::Event::MessageType::Unfollow
+            userId = event['source']['userId']
+            user = User.find_by(uid: userId)
+            user.destroy if user.present?
+          end
+        end
+      else
+        case event
+        when Line::Bot::Event::Message
+          case event.type
+          when Line::Bot::Event::MessageType::Text
+            message = {
+              type: 'text',
+              text: @post.reply
+            }
+            client.reply_message(event['replyToken'], message)
+          when Line::Bot::Event::MessageType::Follow
+            userId = event['source']['userId']
+            User.find_or_create_by(uid: userId)
+          when Line::Bot::Event::MessageType::Unfollow
+            userId = event['source']['userId']
+            user = User.find_by(uid: userId)
+            user.destroy if user.present?
+          end
         end
       end
     }
