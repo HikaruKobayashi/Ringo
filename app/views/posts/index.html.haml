@@ -1,21 +1,24 @@
-%h1 Listing posts
+.container
+  .row
+    = link_to 'New', new_post_path
+    %table
+      %thead
+        %tr
+          %th Reply Box
+          %th
+          %th
+          %th
 
-%table
-  %thead
-    %tr
-      %th Reply
-      %th
-      %th
-      %th
-
-  %tbody
-    - @posts.each do |post|
-      %tr
-        %td= post.reply
-        %td= link_to 'Show', post
-        %td= link_to 'Edit', edit_post_path(post)
-        %td= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' }
-
-%br
-
-= link_to 'New Post', new_post_path
+      %tbody
+        - @posts.each do |post|
+          %tr
+            %td= post.reply
+            %td
+              %button.btn.btn-primary
+                = link_to 'Show', post
+            %td
+              %button.btn.btn-warning
+                = link_to 'Edit', edit_post_path(post)
+            %td
+              %button.btn.btn-danger
+                = link_to 'Delete', post, method: :delete, data: { confirm: 'Are you sure?' }

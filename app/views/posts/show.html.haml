@@ -1,9 +1,11 @@
-%p#notice= notice
+.container
+  .row
+    %p#notice= notice
 
-%p
-  %b Reply:
-  = @post.reply
+    %p
+      %b Reply:
+      = @post.reply
 
-= link_to 'Edit', edit_post_path(@post)
-\|
-= link_to 'Back', posts_path
+    = link_to 'Edit', edit_post_path(@post)
+    \|
+    = link_to 'Back', posts_path
