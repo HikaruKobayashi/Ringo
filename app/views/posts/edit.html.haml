@@ -1,7 +1,18 @@
 .container
   .row
-    = render 'form'
-
-    = link_to 'Show', @post
-    \|
-    = link_to 'Back', posts_path
+    %table.table.table-bordered
+      %thead
+        %tr
+          %th Reply Edit
+          %th
+          %th
+      %tbody
+        %tr
+          %td
+            = render 'form'
+          %td
+            %button.btn.btn-primary
+              = link_to 'Show', @post, class: 'button-style'
+          %td
+            %button.btn.btn-secondary
+              = link_to 'Back', posts_path, class: 'button-style'
