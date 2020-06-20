@@ -1,7 +1,5 @@
 .container
   .row
-    %button.btn.btn-primary
-      = link_to 'New', new_post_path, class: 'button-style'
     %table.table.table-striped.table-bordered
       %thead
         %tr
@@ -9,7 +7,8 @@
           %th
           %th
           %th
-
+            %button.btn.btn-primary
+              = link_to 'New', new_post_path, class: 'button-style'
       %tbody
         - @posts.each do |post|
           %tr
